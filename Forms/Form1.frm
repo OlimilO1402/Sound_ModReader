@@ -1,15 +1,33 @@
 VERSION 5.00
 Begin VB.Form FModReader 
    Caption         =   "Mod-Reader"
-   ClientHeight    =   4095
+   ClientHeight    =   4215
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   10455
    Icon            =   "Form1.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   4095
+   ScaleHeight     =   4215
    ScaleWidth      =   10455
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.TextBox TxtModFile 
+      BeginProperty Font 
+         Name            =   "Courier"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   3135
+      Left            =   0
+      MultiLine       =   -1  'True
+      ScrollBars      =   3  'Beides
+      TabIndex        =   0
+      Top             =   1080
+      Width           =   10455
+   End
    Begin VB.CommandButton BtnGoto 
       Caption         =   "Goto"
       Height          =   375
@@ -21,7 +39,7 @@ Begin VB.Form FModReader
    Begin VB.CommandButton BtnPoints 
       Caption         =   "Points"
       Height          =   375
-      Left            =   9240
+      Left            =   9360
       TabIndex        =   10
       Top             =   600
       Width           =   855
@@ -29,7 +47,7 @@ Begin VB.Form FModReader
    Begin VB.CommandButton BtnSaveWave 
       Caption         =   "Save"
       Height          =   375
-      Left            =   8400
+      Left            =   8520
       TabIndex        =   8
       Top             =   600
       Width           =   855
@@ -37,7 +55,7 @@ Begin VB.Form FModReader
    Begin VB.CommandButton BtnStop 
       Caption         =   "[ ] Stop"
       Height          =   375
-      Left            =   7560
+      Left            =   7680
       TabIndex        =   9
       Top             =   600
       Width           =   855
@@ -45,7 +63,7 @@ Begin VB.Form FModReader
    Begin VB.CommandButton BtnPlay 
       Caption         =   "|> Play"
       Height          =   375
-      Left            =   6720
+      Left            =   6840
       TabIndex        =   6
       Top             =   600
       Width           =   855
@@ -77,13 +95,14 @@ Begin VB.Form FModReader
    End
    Begin VB.ComboBox CmbFileName 
       Height          =   315
-      Left            =   1800
+      Left            =   1920
       OLEDragMode     =   1  'Automatisch
       OLEDropMode     =   1  'Manuell
       TabIndex        =   4
       Text            =   "Combo1"
+      ToolTipText     =   "Drag'drop files here"
       Top             =   120
-      Width           =   8295
+      Width           =   8415
    End
    Begin VB.ComboBox CmbDisplay 
       BeginProperty Font 
@@ -101,31 +120,13 @@ Begin VB.Form FModReader
       Top             =   600
       Width           =   3255
    End
-   Begin VB.TextBox TxtModFile 
-      BeginProperty Font 
-         Name            =   "Courier"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   3135
-      Left            =   0
-      MultiLine       =   -1  'True
-      ScrollBars      =   3  'Beides
-      TabIndex        =   0
-      Top             =   960
-      Width           =   10455
-   End
    Begin VB.PictureBox PBWaveForm 
       Height          =   2895
       Left            =   0
       ScaleHeight     =   2835
       ScaleWidth      =   7515
       TabIndex        =   7
-      Top             =   960
+      Top             =   1080
       Width           =   7575
    End
 End
@@ -150,7 +151,8 @@ Private Sub Form_Load()
     Call .AddItem("https://modarchive.org/") 'changed 06.feb.2021
     'Call .AddItem(App.Path & "\BspModFiles\ACIDOFIL.MOD")
     'Call .AddItem(App.Path & "\BspModFiles\ACID_AGE.MOD")
-    Call .AddItem(App.Path & "\ExampleMods\POWER.MOD")
+    Call .AddItem(App.Path & "\ExampleMods\POWER3.mod")
+    Call .AddItem(App.Path & "\ExampleMods\power(ice89).mod")
     'Call .AddItem(App.Path & "\BspModFiles\1Lars.MOD")
     'Call .AddItem(App.Path & "\BspModFiles\1Tubell.mod")
     'Call .AddItem(App.Path & "\BspModFiles\1powerem2.mod")
@@ -264,8 +266,12 @@ CatchE:
 End Sub
 
 Private Sub BtnGoto_Click()
-Dim D As String: D = CmbFileName.Text
-  Call Shell("explorer.exe " & Left$(D, InStrRev(D, "\")), vbNormalFocus)
+    Dim D As String: D = CmbFileName.Text
+    If Left$(D, 4) = "http" Then
+        BtnOpen_Click
+    Else
+        Call Shell("explorer.exe " & Left$(D, InStrRev(D, "\")), vbNormalFocus)
+    End If
 End Sub
 
 Private Sub CmbFileName_OLEDragDrop(Data As DataObject, Effect As Long, _
