@@ -5,6 +5,7 @@ Begin VB.Form FModReader
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   10455
+   Icon            =   "Form1.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   4095
    ScaleWidth      =   10455
@@ -15,31 +16,31 @@ Begin VB.Form FModReader
       Left            =   960
       TabIndex        =   2
       Top             =   120
-      Width           =   615
+      Width           =   855
    End
    Begin VB.CommandButton BtnPoints 
       Caption         =   "Points"
       Height          =   375
-      Left            =   8880
+      Left            =   9240
       TabIndex        =   10
       Top             =   600
-      Width           =   735
+      Width           =   855
    End
    Begin VB.CommandButton BtnSaveWave 
       Caption         =   "Save"
       Height          =   375
-      Left            =   8160
+      Left            =   8400
       TabIndex        =   8
       Top             =   600
-      Width           =   735
+      Width           =   855
    End
    Begin VB.CommandButton BtnStop 
       Caption         =   "[ ] Stop"
       Height          =   375
-      Left            =   7440
+      Left            =   7560
       TabIndex        =   9
       Top             =   600
-      Width           =   735
+      Width           =   855
    End
    Begin VB.CommandButton BtnPlay 
       Caption         =   "|> Play"
@@ -47,7 +48,7 @@ Begin VB.Form FModReader
       Left            =   6720
       TabIndex        =   6
       Top             =   600
-      Width           =   735
+      Width           =   855
    End
    Begin VB.ComboBox CmbSample 
       BeginProperty Font 
@@ -76,13 +77,13 @@ Begin VB.Form FModReader
    End
    Begin VB.ComboBox CmbFileName 
       Height          =   315
-      Left            =   1560
+      Left            =   1800
       OLEDragMode     =   1  'Automatisch
       OLEDropMode     =   1  'Manuell
       TabIndex        =   4
       Text            =   "Combo1"
       Top             =   120
-      Width           =   8055
+      Width           =   8295
    End
    Begin VB.ComboBox CmbDisplay 
       BeginProperty Font 
@@ -120,7 +121,7 @@ Begin VB.Form FModReader
    End
    Begin VB.PictureBox PBWaveForm 
       Height          =   2895
-      Left            =   120
+      Left            =   0
       ScaleHeight     =   2835
       ScaleWidth      =   7515
       TabIndex        =   7
@@ -168,33 +169,33 @@ Private Sub Form_Load()
 End Sub
 Private Sub Form_Resize()
 Dim l As Single, T As Single, W As Single, H As Single
-Dim brdr As Single: brdr = 8 * Screen.TwipsPerPixelX
+'Dim brdr As Single: brdr = 8 * Screen.TwipsPerPixelX
+'
+'  l = brdr: T = brdr:  W = 7 * brdr: H = 3 * brdr
+'  If W > 0 And H > 0 Then Call BtnOpen.Move(l, T, W, H)
+'
+'  l = l + W: W = 5 * brdr
+'  If W > 0 And H > 0 Then Call BtnGoto.Move(l, T, W, H)
+'
+'  l = l + W: W = Me.ScaleWidth - l - brdr
+'  If W > 0 And H > 0 Then Call CmbFileName.Move(l, T, W) ', H)
+'
+'  l = brdr: T = T + H + brdr: W = 27 * brdr
+'  If W > 0 And H > 0 Then Call CmbDisplay.Move(l, T, W) ', H)
+'
+'  l = l + W + brdr
+'  If W > 0 And H > 0 Then Call CmbSample.Move(l, T, W) ', H)
+'
+'  l = l + W: W = 6 * brdr: H = 3 * brdr
+'  If W > 0 And H > 0 Then Call BtnPlay.Move(l, T, W, H)
+'  l = l + W
+'  If W > 0 And H > 0 Then Call BtnStop.Move(l, T, W, H)
+'  l = l + W
+'  If W > 0 And H > 0 Then Call BtnSaveWave.Move(l, T, W, H)
+'  l = l + W
+'  If W > 0 And H > 0 Then Call BtnPoints.Move(l, T, W, H)
   
-  l = brdr: T = brdr:  W = 7 * brdr: H = 3 * brdr
-  If W > 0 And H > 0 Then Call BtnOpen.Move(l, T, W, H)
-  
-  l = l + W: W = 5 * brdr
-  If W > 0 And H > 0 Then Call BtnGoto.Move(l, T, W, H)
-  
-  l = l + W: W = Me.ScaleWidth - l - brdr
-  If W > 0 And H > 0 Then Call CmbFileName.Move(l, T, W) ', H)
-  
-  l = brdr: T = T + H + brdr: W = 27 * brdr
-  If W > 0 And H > 0 Then Call CmbDisplay.Move(l, T, W) ', H)
-  
-  l = l + W + brdr
-  If W > 0 And H > 0 Then Call CmbSample.Move(l, T, W) ', H)
-  
-  l = l + W: W = 6 * brdr: H = 3 * brdr
-  If W > 0 And H > 0 Then Call BtnPlay.Move(l, T, W, H)
-  l = l + W
-  If W > 0 And H > 0 Then Call BtnStop.Move(l, T, W, H)
-  l = l + W
-  If W > 0 And H > 0 Then Call BtnSaveWave.Move(l, T, W, H)
-  l = l + W
-  If W > 0 And H > 0 Then Call BtnPoints.Move(l, T, W, H)
-  
-  l = 0: T = T + H:
+  l = 0: T = TxtModFile.Top
   W = Me.ScaleWidth '- L - brdr
   H = Me.ScaleHeight - T '- brdr
   If W > 0 And H > 0 Then Call TxtModFile.Move(l, T, W, H)
