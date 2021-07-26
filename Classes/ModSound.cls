@@ -108,7 +108,7 @@ End Function
 
 Public Function ConvertToWaveSound() As WaveSound
 TryE: On Error GoTo FinallyE
-  Dim ws As WaveSound: Set ws = New_WaveSound(8, 1, 14000)
+  Dim ws As WaveSound: Set ws = MNew.WaveSound(8, 1, 14000)
   If mBytLen Then
     Dim i As Long, bl As Long: bl = UBound(mSndBuff) + 1
     Call ws.SetBufferLength(bl)

@@ -254,7 +254,7 @@ TryE: On Error GoTo CatchE
     'rv = Shell(CmbFileName.Text, vbNormalFocus)
     MDefInetBrowser.Start Me.hWnd, CmbFileName.Text
   Else
-    Set mMod = New_ModFile(CmbFileName.Text)
+    Set mMod = MNew.ModFile(CmbFileName.Text)
     Call InitCmbSample
     Call InitCmbDisplay
     CmbDisplay.ListIndex = 0

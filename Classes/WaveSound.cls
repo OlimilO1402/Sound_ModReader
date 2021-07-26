@@ -60,7 +60,7 @@ Private Sub Class_Terminate()
   Call DeletePBuff
 End Sub
 
-Public Sub NewC(ByVal bps As Integer, ByVal nchannels As Integer, ByVal sps As Long)
+Friend Sub New_(ByVal bps As Integer, ByVal nchannels As Integer, ByVal sps As Long)
   With pHead.p(0)
     .Channels = nchannels
     .SamplesPerSecond = sps
@@ -94,8 +94,8 @@ Public Sub Read(ByVal aFNr As Integer, Optional ByVal aFileOff As Long = -1)
 'die Position der Daten anhand "data" suchen.
 '
 'nur überhaupt was lesen, wenn der Buffer ein Größe > HL hat
-  Dim N As Long: N = UBound(mSndBuff) - HL + 1
-  If N > 0 Then
+  Dim n As Long: n = UBound(mSndBuff) - HL + 1
+  If n > 0 Then
     Call InitPBuff
     If aFileOff >= 0 Then
       Get aFNr, aFileOff, pBuff.p

@@ -84,17 +84,17 @@ Private mModFile  As ModFile 'Zeiger auf das Document
 Private mIndex    As Long    'der Index dieses Patterns '0-basiert
 Private mChannels As Long    'die Anzahl an Channels (Tracks)
 Private Type NoteLine
-  L() As ModNote             'a note for each channel
+  l() As ModNote             'a note for each channel
 End Type
 'ein Pattern besteht immer aus einer festen Anzahl von 64 Zeilen
 Private mPat(0 To 63) As NoteLine
 
-Public Sub NewC(aModFile As ModFile, ByVal aIndex As Long)
+Friend Sub New_(aModFile As ModFile, ByVal aIndex As Long)
   Set mModFile = aModFile
   mChannels = aModFile.MaxChannels
   mIndex = aIndex
 End Sub
-'Public Function New_ModPattern(aModFile As ModFile) As ModPattern
+'Public Function ModPattern(aModFile As ModFile) As ModPattern
 '  Set New_ModPattern = New ModPattern
 '  Call New_ModPattern.NewC(aModFile)
 'End Function
@@ -104,8 +104,8 @@ Dim i As Long
   If mChannels > 0 Then
     For i = 0 To 63
       With mPat(i)
-        ReDim .L(0 To mChannels - 1)
-        Get aFNr, , .L
+        ReDim .l(0 To mChannels - 1)
+        Get aFNr, , .l
       End With
     Next
   End If
@@ -136,14 +136,14 @@ End Property
 '              ZZZZzzzzzzzz (12 bits) : effect and argument
 'ln=LineNr, cn=ChannelNr
 Public Property Get SampleNr(ln As Long, cn As Long) As Long
-  With mPat(ln).L(cn): SampleNr = (&HF0 And .B1) + ((&HF0 And .B3) / &H10): End With
+  With mPat(ln).l(cn): SampleNr = (&HF0 And .B1) + ((&HF0 And .B3) / &H10): End With
 End Property
 Public Property Let SampleNr(ln As Long, cn As Long, LngVal As Long)
   'n.y.i. not yet implemented
 End Property
 
 Public Property Get Note(ln As Long, cn As Long) As Long
-  With mPat(ln).L(cn): Note = (&HF And .B1) * &HFF + .B2: End With
+  With mPat(ln).l(cn): Note = (&HF And .B1) * &HFF + .B2: End With
 End Property
 Public Property Let Note(ln As Long, cn As Long, LngVal As Long)
   'n.y.i. not yet implemented
@@ -254,7 +254,7 @@ End Function
 'portion to  declare the  extended effect  number and  the  only the  yyyy
 'portion as an argument.
 Public Property Get Effect(ln As Long, cn As Long) As ModEffects
-  With mPat(ln).L(cn): Effect = (&HF And .B3)
+  With mPat(ln).l(cn): Effect = (&HF And .B3)
     If Effect = &HE Then
       Effect = &HE0 + (&HF0 And .B4) / &H10
     End If
@@ -286,7 +286,7 @@ End Property
 'F   Set Speed                            xxxxyyyy
 Private Function GetEffectArg1(ln As Long, cn As Long, Optional ByVal e As Long = -1) As Long
   If e < 0 Then e = Effect(ln, cn)
-  With mPat(ln).L(cn)
+  With mPat(ln).l(cn)
     Select Case e
     Case 0, 4, 5, 6, 7, &HA '
       GetEffectArg1 = ((&HF0 And .B4) / &H10) '+ ((&HF And .B4) * &H10)
@@ -306,7 +306,7 @@ End Property
 
 Private Function GetEffectArg2(ln As Long, cn As Long, Optional ByVal e As Long = -1) As Long
   If e < 0 Then e = Effect(ln, cn)
-  With mPat(ln).L(cn)
+  With mPat(ln).l(cn)
     Select Case e
     Case 0, 4, 5, 6, 7, &HA
       GetEffectArg2 = (&HF And .B4) '/ &H10)

@@ -1,4 +1,4 @@
-Attribute VB_Name = "ModUDTPointer"
+Attribute VB_Name = "MUDTPointer"
 Option Explicit '2007_05_17 Zeilen: 96
 Public Type TUDTPtr
   pSA        As Long    '4

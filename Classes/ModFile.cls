@@ -46,12 +46,12 @@ TryE: On Error GoTo FinallyE
   oldseeker = Seek(FNr) 'die aktuelle Dateiposition sichern
   mMaxSamples = ComputeNrOfSamples(FNr)
   '21 ... 950 SampleInfoBank
-  Set mSampleInfoBank = New_ModSampleInfos(FNr, mMaxSamples, oldseeker)
+  Set mSampleInfoBank = MNew.ModSampleInfos(FNr, mMaxSamples, oldseeker)
   'ReDim mSampleInfoBank(0 To mNrOfSamples - 1)
   'Get mFNr, oldseeker, mSampleInfoBank 'die aktuelle Dateiposition wiederherstellen
 
   '951 - 1084 SongDescriptor
-  Set mSongDesc = New_ModSongDescriptorF(FNr, Seek(FNr))
+  Set mSongDesc = MNew.ModSongDescriptorF(FNr, Seek(FNr))
 
   '1085 ... 'Pattern and Sample Data
   mMaxChannels = mSongDesc.ComputeNrOfChannels
@@ -60,7 +60,7 @@ TryE: On Error GoTo FinallyE
   Call ClearPatterns
   Dim p As ModPattern
   For i = 0 To mMaxPatterns '- 1 'nein nicht -1 !
-    Set p = New_ModPattern(Me, i)
+    Set p = MNew.ModPattern(Me, i)
     Call p.Read(FNr)
     Call mPatterns.Add(p, CStr(i))
   Next
@@ -73,7 +73,7 @@ TryE: On Error GoTo FinallyE
   For i = 0 To mSampleInfoBank.MaxSamples - 1
     sl = mSampleInfoBank.SampleLen(i) * 2
     'If sl > 0 Then
-      Set ms = New_ModSound(FNr, sl)
+      Set ms = MNew.ModSound(FNr, sl)
       'sn = mSampleInfoBank.SampleName(i)
       Call mSounds.Add(ms, CStr(i + 1)) ', sn)
     'End If
